@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+
+namespace DictionaryExampleApp.Entity
+{
+    public sealed class Classroom
+    {
+        public string Id { get; }
+        public List<Student> Students { get; }
+
+        public Classroom(string id)
+        {
+            Id = id;
+            Students = new List<Student>();
+        }
+
+        public Classroom(string id, List<Student> students)
+        {
+            Id = id;
+            Students = students;
+        }
+
+        public bool TryAddStudent(Student student)
+        {
+            try
+            {
+                Students.Add(student);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool TryAddStudents(List<Student> students)
+        {
+            try
+            {
+                Students.AddRange(students);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+    }
+}

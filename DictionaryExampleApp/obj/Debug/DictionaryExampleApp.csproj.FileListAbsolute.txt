@@ -1,0 +1,9 @@
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/bin/Debug/DictionaryExampleApp.exe
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/bin/Debug/DictionaryExampleApp.pdb
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/obj/Debug/DictionaryExampleApp.csproj.AssemblyReference.cache
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/obj/Debug/DictionaryExampleApp.csproj.CoreCompileInputs.cache
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/obj/Debug/DictionaryExampleApp.exe
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/obj/Debug/DictionaryExampleApp.pdb
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/bin/Debug/Bogus.dll
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/bin/Debug/Bogus.xml
+/Users/lorenzomarchisio/Desktop/DictionaryExampleApp/DictionaryExampleApp/obj/Debug/DictionaryExampleApp.csproj.CopyComplete
