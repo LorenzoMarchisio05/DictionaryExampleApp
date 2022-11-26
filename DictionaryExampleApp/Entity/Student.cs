@@ -13,6 +13,7 @@ namespace DictionaryExampleApp.Entity
         public Student()
         {
             // used by bogus to create students
+            // dont remove setters for name and surname ( Used by Bogus for data generator )
         }
 
         public Student(string name, string surname, ushort age)

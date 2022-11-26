@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Bogus;
 using DictionaryExampleApp.Entity;
@@ -17,12 +16,12 @@ namespace DictionaryExampleApp.DataGenerators
         {
             List<Classroom> classrooms = new List<Classroom>();
             
-            foreach (var id in _classId)
+            foreach (string id in _classId)
             {
                 List<Student> students = new Faker<Student>()
                     .RuleFor(s => s.Name, f => f.Person.FirstName)
                     .RuleFor(s => s.Surname, f => f.Person.LastName)
-                    .RuleFor(s => s.Age, f => ushort.Parse((DateTime.Now.Year - f.Person.DateOfBirth.Year).ToString()))
+                    .RuleFor(s => s.Age, f => f.Random.UShort(6 , 20))
                     .Generate(20);
 
                 classrooms.Add(new Classroom(id, students));
