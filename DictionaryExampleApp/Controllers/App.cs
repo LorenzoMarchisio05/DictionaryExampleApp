@@ -75,7 +75,7 @@ namespace DictionaryExampleApp.Controllers
                     }
                     break;
                 case 4:
-                    Dictionary<string, List<Student>> studentsPerClass = _classroomHandler.GetStudentsPerClass();
+                    IReadOnlyDictionary<string, List<Student>> studentsPerClass = _classroomHandler.GetStudentsPerClass();
 
                     foreach (string key in studentsPerClass.Keys)
                     {

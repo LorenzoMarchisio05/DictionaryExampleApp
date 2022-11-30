@@ -10,6 +10,30 @@ Questo tipo di dati rappresenta una coppia chiave valore, i tipi della chiave e 
 
 Come si vede dal codice sopra inserito, durante la creazione gli passiamo due tipi, nel nostro caso string e int, il primo tipo rappresenta il tipo della chiave del dictionary, mentre il secondo rappresenta il valore correlato alla chiave
 
+# Proprietà principali dei dictionary
+
+-   ### Count
+-   ### Keys
+-   ### Values
+
+## Count
+
+    public int Count { get; }
+
+Count è una property di sola lettura che ci permette di sapere quante coppie chiave-valore contiene il nostro dictionary
+
+## Keys
+
+    public KeyCollection Keys { get; }
+
+Keys è anch'essa una property di sola lettura e ci permette di ottenere un elenco di tipo KeyCollection delle chiavi presenti nel dictionary
+
+## Values
+
+    public ValueCollection Values { get; }
+
+Values è di nuovo una property di sola lettura e ci permette di ottenere un elenco di tipo ValueCollaction dei valori presenti all'interno del dictionary
+
 # Questi sono i principali metodi dei Dictionary
 
 -   ### Add
@@ -66,4 +90,4 @@ L'utilizzo di questa funzione è sicuramente il modo più sicuro per accedere ai
 
     dictionary[key]
 
-in questo modo possiamo ottenere il valore però perdiamo il controllo fornito dal TryGetValue
+in questo modo possiamo ottenere il valore però perdiamo la sicurezza fornita dal TryGetValue

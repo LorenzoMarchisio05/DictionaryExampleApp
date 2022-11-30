@@ -8,6 +8,9 @@ namespace DictionaryExampleApp.Controllers
 {
     public class ClassroomHandler
     {
+        /// <summary>
+        /// Dictionary privato, readonly perche instanziato dal costruttore
+        /// </summary>
         private readonly Dictionary<string, Classroom> _classrooms;
 
         public ClassroomHandler()
@@ -15,6 +18,11 @@ namespace DictionaryExampleApp.Controllers
             _classrooms = new Dictionary<string, Classroom>();
         }
 
+        /// <summary>
+        /// Funzione per l'aggiunta di una classe, accetta un tipo classroom vedi classe Classroom
+        /// </summary>
+        /// <param name="classroom">classe da aggiungere all'interno della nostra lista di classi</param>
+        /// <returns>Ritorna true se l'aggiunta della classe avviene correttamente</returns>
         private bool TryAddClassroom(Classroom classroom)
         {
             try
@@ -29,7 +37,12 @@ namespace DictionaryExampleApp.Controllers
             }
         }
         
-        public bool TryAddClassrooms(List<Classroom> classrooms)
+        /// <summary>
+        /// Funzione per l'aggiunta di un elenco di classi, accetta un tipo IEnumerable<Classroom> vedi classe Classroom
+        /// </summary>
+        /// <param name="classroom">Elenco di classi da aggiungere all'interno della nostra lista di classi</param>
+        /// <returns>Ritorna true se l'aggiunta delle classi avviene correttamente</returns>
+        public bool TryAddClassrooms(IEnumerable<Classroom> classrooms)
         {
             try
             {
@@ -46,19 +59,32 @@ namespace DictionaryExampleApp.Controllers
             }
         }
 
-        public Dictionary<string, Classroom> GetAllClassrooms()
+        /// <summary>
+        /// Ritorna una copia del dictionary della classe, il tipo di retorno è un IReadOlyDictionary
+        /// </summary>
+        /// <returns>Ritorna un IReadOnlyDictionary per impedire la modifica dei valori</returns>
+        public IReadOnlyDictionary<string, Classroom> GetAllClassrooms()
         {
-            return _classrooms.ToDictionary(
-                    entry => entry.Key, 
-                    entry => entry.Value );
+            return _classrooms;
         }
 
+        /// <summary>
+        /// ottiene una classe dato un id
+        /// </summary>
+        /// <param name="id">id della classe da trovare</param>
+        /// <returns>Ritorna la classe ricercata</returns>
         public Classroom GetClassroomById(string id)
         {
+            
             return _classrooms[id];
         }
 
-        public Dictionary<string, List<Student>> GetStudentsPerClass()
+        /// <summary>
+        /// Ritorna un IReadOnlyDictionay contenente un insieme di coppie chiave valore dove
+        /// la chiave rappresenta la classe di appertenenza mentre il valore è una lista di studenti
+        /// </summary>
+        /// <returns>Ritorna un IReadOnlyDictionay<string, List<Students>> contentene un elenco di classi e studenti</returns>
+        public IReadOnlyDictionary<string, List<Student>> GetStudentsPerClass()
         {
             Dictionary<string, List<Student>> studentsPerClass = new Dictionary<string, List<Student>>();
             
@@ -71,11 +97,20 @@ namespace DictionaryExampleApp.Controllers
             return studentsPerClass;
         }
 
+        /// <summary>
+        /// Rimuove una clasee dal dictionary
+        /// </summary>
+        /// <param name="id">l'id della classe, rappresenta la chiave nel Dictionary</param>
+        /// <returns>Ritorna l'esito della rimozione (true in caso di successo)</returns>
         public bool RemoveClassroomFromId(string id)
         {
             return _classrooms.Remove(id);
         }
 
+        /// <summary>
+        /// Funzione per la creazione di una nuova classe
+        /// </summary>
+        /// <returns>Ritorna l'esito della creazione</returns>
         public bool CreateClass()
         {
             List<Student> students = new List<Student>();
@@ -95,6 +130,37 @@ namespace DictionaryExampleApp.Controllers
                 return false;
             }
         }
+
+        /// <summary>
+        /// Aggiunge uno studente ad una classe
+        /// </summary>
+        public void AddStudentToClass()
+        {
+            HandleClassIdSelection(out string classId);
+            _classrooms[classId].Students.Add(HandleStudentsCreation());
+        }
+
+        /// <summary>
+        /// Rimuove tutte le classi presenti nel dictionary
+        /// </summary>
+        /// <returns>Ritorna l'esito della rimozione</returns>
+        public bool RemoveAllClassrooms()
+        {
+            try
+            {
+                _classrooms.Clear();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+        }   
+        
+        #region Class creation backend
+
+        
 
         private void HandleStudentsListCreation(List<Student> students)
         {
@@ -165,24 +231,7 @@ namespace DictionaryExampleApp.Controllers
             } while (!NameValidator.Validate(surname));
         }
 
-        public void AddStudentToClass()
-        {
-            HandleClassIdSelection(out string classId);
-            _classrooms[classId].Students.Add(HandleStudentsCreation());
-        }
-
-        public bool RemoveAllClassrooms()
-        {
-            try
-            {
-                _classrooms.Clear();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            
-        }   
+        #endregion
+        
     }
 }

@@ -19,31 +19,5 @@ namespace DictionaryExampleApp.Entity
             Id = id;
             Students = students;
         }
-
-        public bool TryAddStudent(Student student)
-        {
-            try
-            {
-                Students.Add(student);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public bool TryAddStudents(List<Student> students)
-        {
-            try
-            {
-                Students.AddRange(students);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
     }
 }
