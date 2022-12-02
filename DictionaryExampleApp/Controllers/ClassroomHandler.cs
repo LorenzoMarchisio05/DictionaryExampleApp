@@ -12,6 +12,8 @@ namespace DictionaryExampleApp.Controllers
         /// Dictionary privato, readonly perche instanziato dal costruttore
         /// </summary>
         private readonly Dictionary<string, Classroom> _classrooms;
+        
+        private const string EXIT_SEQUENCE = "ESC";
 
         public ClassroomHandler()
         {
@@ -118,6 +120,11 @@ namespace DictionaryExampleApp.Controllers
             try
             {
                 HandleClassIdInsertion(out string classId);
+
+                if (classId == EXIT_SEQUENCE)
+                {
+                    return false;
+                }
                 
                 HandleStudentsListCreation(students);
                 
@@ -137,7 +144,14 @@ namespace DictionaryExampleApp.Controllers
         public void AddStudentToClass()
         {
             HandleClassIdSelection(out string classId);
-            _classrooms[classId].Students.Add(HandleStudentsCreation());
+            if (_classrooms.TryGetValue(classId, out Classroom classroom))
+            {
+                classroom.Students.Add(HandleStudentsCreation());;
+            }
+            else
+            {
+                Console.WriteLine("Annullamento dell'operazione o errore nell'inserimento della classe");
+            }
         }
 
         /// <summary>
@@ -170,12 +184,13 @@ namespace DictionaryExampleApp.Controllers
 
                 students.Add(HandleStudentsCreation());
                 
-                Console.WriteLine(@"Digita ""esc"" per uscire dalla modalita di inserimento");
-            } while (Console.ReadLine()?.Trim().ToLower() != "esc");
+                Console.WriteLine($@"Digita ""{EXIT_SEQUENCE}"" per uscire dalla modalita di inserimento o premi invio per inserire un nuovo studente");
+            } while (Console.ReadLine()?.Trim().ToUpper() != EXIT_SEQUENCE);
         }
 
         private Student HandleStudentsCreation()
         {
+            Console.WriteLine("Inserisci dati studente");
             HandleNameInsertion(out string name);
             HandleSurnameInsertion(out string surname);
             HandleAgeInsertion(out ushort age);
@@ -187,22 +202,40 @@ namespace DictionaryExampleApp.Controllers
 
         private void HandleClassIdInsertion(out string classId)
         {
+            bool valid = true;
             do
             {
                 Console.Clear();
-                Console.Write("Insersci l'id della nuova classe: ");
+                if (!valid)
+                {
+                    Console.WriteLine("ID non valido");
+                }
+                Console.Write($@"Insersci l'id della nuova classe o digita ""{EXIT_SEQUENCE}"" per uscire: ");
                 classId = Console.ReadLine()?.Trim().ToUpper() ?? "";
-            } while (_classrooms.ContainsKey(classId));
+                valid = !IdValidator.Validate(classId) || _classrooms.ContainsKey(classId);
+            } while (classId != EXIT_SEQUENCE && !valid);
         }
         
         private void HandleClassIdSelection(out string classId)
         {
+            bool valid = true;
             do
             {
                 Console.Clear();
-                Console.Write("Insersci l'id della classe: ");
-                classId = Console.ReadLine()?.Trim() ?? "";
-            } while (!_classrooms.ContainsKey(classId));
+                if (!valid)
+                {
+                    Console.WriteLine("ID non valido");
+                }
+                Console.Write($@"Insersci l'id della classe o digita ""{EXIT_SEQUENCE}"" per uscire: ");
+                classId = Console.ReadLine()?.Trim().ToUpper() ?? "";
+                
+                if (classId.Length != 2)
+                {
+                    valid = _classrooms.ContainsKey(classId);    
+                }
+                
+                
+            } while (classId != EXIT_SEQUENCE && !valid);
         }
 
         private void HandleAgeInsertion(out ushort age)

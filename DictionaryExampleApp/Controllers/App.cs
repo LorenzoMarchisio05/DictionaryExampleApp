@@ -27,8 +27,6 @@ namespace DictionaryExampleApp.Controllers
                 Menu(out scelta);
                 
                 HandleScelta(scelta);
-
-                if (scelta != 0) Console.ReadKey();
             } while (scelta != 0);
         }
         
@@ -65,6 +63,7 @@ namespace DictionaryExampleApp.Controllers
                     break;
                 case 2:
                     _classroomHandler.AddStudentToClass();
+                    Console.ReadKey();
                     break;
                 case 3:
                     var classrooms = _classroomHandler.GetAllClassrooms();
@@ -73,6 +72,7 @@ namespace DictionaryExampleApp.Controllers
                     {
                         Console.WriteLine(classroomsId);
                     }
+                    Console.ReadKey();
                     break;
                 case 4:
                     IReadOnlyDictionary<string, List<Student>> studentsPerClass = _classroomHandler.GetStudentsPerClass();
@@ -86,25 +86,36 @@ namespace DictionaryExampleApp.Controllers
                             Console.WriteLine($"\t{student.Fullname} {student.Age}");
                         }
                     }
+                    Console.ReadKey();
                     break;
                 case 5:
                     string id;
+                    bool valid = true;
                     do
                     {
                         Console.Clear();
-                        Console.Write("Inserisci id classe: ");
+                        if (!valid)
+                        {
+                            Console.WriteLine("ID invalido");
+                        }
+                        Console.Write(@"Inserisci id classe o digita ""ESC"" per uscire: ");
                         id = Console.ReadLine()?.Trim().ToUpper();
-                    } while (!IdValidator.Validate(id));
+                        valid = IdValidator.Validate(id);
+                    } while (id != "ESC" && !valid);
 
-                    Console.WriteLine(_classroomHandler.RemoveClassroomFromId(id)
-                        ? "Classe rimossa con successo"
-                        : "Errore nella rimozione della classe");
-
+                    if (id != "ESC")
+                    {
+                        Console.WriteLine(_classroomHandler.RemoveClassroomFromId(id)
+                            ? "Classe rimossa con successo"
+                            : "Errore nella rimozione della classe");   
+                        Console.ReadKey();
+                    }
                     break;
                 case 6:
                     Console.WriteLine(_classroomHandler.RemoveAllClassrooms()
                         ? "Successo rimozione tutte le classi"
                         : "Errore rimozioni classi");
+                    Console.ReadKey();
                     break;
             }
         }
