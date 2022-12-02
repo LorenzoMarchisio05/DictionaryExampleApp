@@ -1,10 +1,38 @@
+using System;
+using DictionaryExampleApp.Validators;
+
 namespace DictionaryExampleApp.Entity
 {
     public sealed class Student
     {
-        public string Name { get; set; }
-        
-        public string Surname { get; set; }
+        private string _name;
+        private string _surname;
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (!NameValidator.Validate(value))
+                {
+                    throw new Exception("invalid name");
+                }
+                _name = value;
+            }
+        }
+
+        public string Surname
+        {
+            get => _surname;
+            set
+            {
+                if (!NameValidator.Validate(value))
+                {
+                    throw new Exception("invalid name");
+                }
+                _surname = value;
+            }
+        }
 
         public string Fullname => $"{Surname} {Name}";
 
