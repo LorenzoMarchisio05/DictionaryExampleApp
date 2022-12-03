@@ -212,7 +212,7 @@ namespace DictionaryExampleApp.Controllers
                 }
                 Console.Write($@"Insersci l'id della nuova classe o digita ""{EXIT_SEQUENCE}"" per uscire: ");
                 classId = Console.ReadLine()?.Trim().ToUpper() ?? "";
-                valid = !IdValidator.Validate(classId) || _classrooms.ContainsKey(classId);
+                valid = IdValidator.Validate(classId) || _classrooms.ContainsKey(classId);
             } while (classId != EXIT_SEQUENCE && !valid);
         }
         
